@@ -35,3 +35,34 @@ gitfs_remotes:
 ```
 
 
+## Features
+
+The following assumes you would run this state as part of a [Vagrant *local* development](https://www.vagrantup.com/) setup.
+
+Access your workspace VM through SSH
+
+    vagrant ssh
+
+
+Then...
+
+
+### Test email delivery
+
+
+Try sending yourself an email using `swaks`
+
+    swaks -t bogus@localhost -s localhost
+
+Open up `mutt` and see if you got it.
+
+    mutt
+
+#### Mutt in a nutshell
+
+* <kbd>ENTER</kbd> to confirm, or read
+* <kbd>q</kbd> to quit
+* <kbd>d</kbd> to delete
+
+Rest are instructions shown in the UI.
+
