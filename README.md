@@ -34,6 +34,9 @@ gitfs_remotes:
   - https://github.com/renoirb/emailblackhole-formula.git
 ```
 
+Emails won’t go out, but to prevent bouncing you can adjust `emailblackhole:dc_other_hostnames` with the list of email providers you want to superseed locally.
+
+
 
 ## Features
 
@@ -54,7 +57,16 @@ Try sending yourself an email using `swaks`
 
     swaks -t bogus@localhost -s localhost
 
-Open up `mutt` and see if you got it.
+Look where the mail went:
+
+    sudo tail -f /var/log/exim4/mainlog
+    2015-04-26 22:07:54 1YmUiQ-0006bB-Pn <= vagrant@sweetiesweetie.local H=localhost (sweetiesweetie.local) [127.0.0.1] P=esmtp S=498
+    2015-04-26 22:07:54 1YmUiQ-0006bB-Pn => vagrant <bogus@localhost> R=local_user T=maildir_home
+    2015-04-26 22:07:54 1YmUiQ-0006bB-Pn Completed
+
+Exit tail with <kbd>ctrl</kbd>+<kbd>c</kbd>
+
+Read the email locally using `mutt`. You should see it;
 
     mutt
 
@@ -65,4 +77,19 @@ Open up `mutt` and see if you got it.
 * <kbd>d</kbd> to delete
 
 Rest are instructions shown in the UI.
+
+
+
+# Reference
+
+This work was based on notes gathered around, here are the most helpful pages I found.
+
+* http://www.courier-mta.org/maildrop/
+* https://github.com/Exim/exim/wiki/EximSecurity
+* http://www.exim.org/exim-html-current/doc/html/spec_html/ch-address_rewriting.html
+* http://www.exim.org/exim-html-current/doc/html/spec_html/ch-security_considerations.html
+* http://www.exim.org/exim-html-current/doc/html/spec_html/ch-the_exim_run_time_configuration_file.html
+* https://lists.debian.org/debian-user/2004/10/msg01701.html
+* https://www.rosehosting.com/blog/how-to-setup-a-mailserver-with-exim4-and-dbmail-on-a-debian-7-vps/
+* http://stackoverflow.com/questions/2417306/catchall-router-on-exim-does-not-work
 

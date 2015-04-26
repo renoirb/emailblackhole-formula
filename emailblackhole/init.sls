@@ -1,13 +1,3 @@
-
-#
-# Ref:
-#   - http://www.courier-mta.org/maildrop/
-#   - https://github.com/Exim/exim/wiki/EximSecurity
-#   - http://www.exim.org/exim-html-current/doc/html/spec_html/ch-address_rewriting.html
-#   - http://www.exim.org/exim-html-current/doc/html/spec_html/ch-security_considerations.html
-#   - http://www.exim.org/exim-html-current/doc/html/spec_html/ch-the_exim_run_time_configuration_file.html
-#
-
 formula-shell-utils:
   pkg.installed:
     - pkgs:
@@ -38,7 +28,7 @@ Email catch_all blackhole:
     - source: salt://emailblackhole/files/update-exim4.conf.jinja
     - template: jinja
     - context:
-        pillar_seed: []
+        pillar_seed: {{ salt['pillar.get']('emailblackhole:dc_other_hostnames', []) }}
   cmd.run:
     - name: maildirmake /home/vagrant/Maildir
     - user: vagrant
