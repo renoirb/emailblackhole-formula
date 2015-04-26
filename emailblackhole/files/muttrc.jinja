@@ -1,0 +1,44 @@
+#
+# Local email viewer configuration
+#
+# Mutt is useful to read email from a terminal. If you are used to vim, you will
+# be able to grasp it quickly.
+#
+# To read mail, from the vagrant user, type mutt
+#
+set my_name='Vagrant'
+set from='vagrant@localhost'
+set use_from=yes
+set envelope_from="yes"
+
+color index brightyellow default ~N
+color index brightred default ~D
+
+# Sending through smtp
+set smtp_url="smtp://localhost:25/"
+set realname='Vagrant local user'
+
+set date_format="!%Y-%m-%d %R%Z"
+set editor='vim'
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+
+set sort='threads'
+set sort_aux='reverse-last-date-received'
+
+# See: http://www.elho.net/mutt/maildir/
+set folder="~/Maildir/"
+set spoolfile="~/Maildir/"
+set record="+.Sent"
+set postponed="+.Drafts"
+set mbox_type=Maildir
+
+auto_view text/html
+alternative_order text/plain text/html
+
+bind editor <space> noop
+macro index,pager y "<save-message>=.Archive<enter><enter>" "Archive"
+macro index,pager d "<save-message>=.Trash<enter><enter>" "Trash"
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index gd "<change-folder>=.Drafts<enter>" "Go to drafts"

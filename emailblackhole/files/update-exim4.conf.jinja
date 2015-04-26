@@ -1,0 +1,21 @@
+# Managed by Salt Stack, for local delivery only w/ catchall.
+#
+# ANY email that match local machine address in `/etc/mailname` will
+# get forwarded to vagrant user in its Maildir folder (/home/vagrant/Maildir)
+# to read mail, as vagrant user, just do `mutt`.
+#
+# This file should be in /etc/exim4/update-exim4.conf.conf
+#
+dc_eximconfig_configtype='local'
+dc_other_hostnames='localhost;{{ grains['fqdn'] }};{{ grains['nodename'] }};gmail.com;yahoo.com;outlook.com;hotmail.com;{{ pillar_seed|join(';') }}'
+dc_local_interfaces='127.0.1.1 ; 127.0.0.1'
+dc_readhost=''
+dc_relay_domains=''
+dc_minimaldns='false'
+dc_relay_nets=''
+dc_smarthost=''
+CFILEMODE='644'
+dc_use_split_config='false'
+dc_hide_mailname=''
+dc_mailname_in_oh='true'
+dc_localdelivery='maildir_home'

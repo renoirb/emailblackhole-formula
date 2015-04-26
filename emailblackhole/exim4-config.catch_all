@@ -1,0 +1,14 @@
+
+# configtype=local
+
+# ref:
+#   - https://lists.debian.org/debian-user/2004/10/msg01701.html
+#   - https://www.rosehosting.com/blog/how-to-setup-a-mailserver-with-exim4-and-dbmail-on-a-debian-7-vps/
+#   - http://stackoverflow.com/questions/2417306/catchall-router-on-exim-does-not-work
+catch_all:
+  debug_print = "R: catch_all for $local_part@$domain"
+  driver = redirect
+  domains = +local_domains
+  data = ${lookup{$local_part}lsearch*@{/etc/aliases}}
+  retry_use_local_part
+
