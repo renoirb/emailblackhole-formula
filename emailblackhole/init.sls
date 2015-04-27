@@ -28,7 +28,7 @@ Email catch_all blackhole:
     - source: salt://emailblackhole/files/update-exim4.conf.jinja
     - template: jinja
     - context:
-        pillar_seed: {{ salt['pillar.get']('emailblackhole:dc_other_hostnames', []) }}
+        dc_other_hostnames: {{ salt['pillar.get']('emailblackhole:dc_other_hostnames', []) }}
   cmd.run:
     - name: maildirmake /home/vagrant/Maildir
     - user: vagrant
