@@ -70,6 +70,8 @@ Read the email locally using `mutt`. You should see it;
 
     mutt
 
+![emailblackhole-local-mutt](https://cloud.githubusercontent.com/assets/296940/7446280/54b6e112-f1a1-11e4-9cd7-eed758c8f301.png)
+
 #### Mutt in a nutshell
 
 * <kbd>ENTER</kbd> to confirm, or read
