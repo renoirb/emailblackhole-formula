@@ -55,14 +55,42 @@ Then...
 
 Try sending yourself an email using `swaks`
 
-    swaks -t bogus@localhost -s localhost
+    vagrant@sweetiesweetie:~$ swaks -t bogus@gmail.com -s localhost --body 'Hey let me send this to gmail.com'
+    === Trying localhost:25...
+    === Connected to localhost.
+    <-  220 sweetiesweetie ESMTP Exim 4.82 Ubuntu Sun, 03 May 2015 18:38:41 +0000
+     -> EHLO sweetiesweetie.local
+    <-  250-sweetiesweetie Hello localhost [127.0.0.1]
+    <-  250-SIZE 52428800
+    <-  250-8BITMIME
+    <-  250-PIPELINING
+    <-  250 HELP
+     -> MAIL FROM:<vagrant@sweetiesweetie.local>
+    <-  250 OK
+     -> RCPT TO:<bogus@gmail.com>
+    <-  250 Accepted
+     -> DATA
+    <-  354 Enter message, ending with "." on a line by itself
+     -> Date: Sun, 03 May 2015 18:38:41 +0000
+     -> To: bogus@gmail.com
+     -> From: vagrant@sweetiesweetie.local
+     -> Subject: test Sun, 03 May 2015 18:38:41 +0000
+     -> X-Mailer: swaks v20130209.0 jetmore.org/john/code/swaks/
+     ->
+     -> Hey let me send this to gmail.com
+     ->
+     -> .
+    <-  250 OK id=1Yoymn-0000iN-E1
+     -> QUIT
+    <-  221 sweetiesweetie closing connection
+    === Connection closed with remote host.
 
 Look where the mail went:
 
-    sudo tail -f /var/log/exim4/mainlog
-    2015-04-26 22:07:54 1YmUiQ-0006bB-Pn <= vagrant@sweetiesweetie.local H=localhost (sweetiesweetie.local) [127.0.0.1] P=esmtp S=498
-    2015-04-26 22:07:54 1YmUiQ-0006bB-Pn => vagrant <bogus@localhost> R=local_user T=maildir_home
-    2015-04-26 22:07:54 1YmUiQ-0006bB-Pn Completed
+    sudo tail /var/log/exim4/mainlog
+    2015-05-03 18:38:41 1Yoymn-0000iN-E1 <= vagrant@sweetiesweetie.local H=localhost (sweetiesweetie.local) [127.0.0.1] P=esmtp S=509
+    2015-05-03 18:38:41 1Yoymn-0000iN-E1 => vagrant <bogus@gmail.com> R=local_user T=maildir_home
+    2015-05-03 18:38:41 1Yoymn-0000iN-E1 Completed
 
 Exit tail with <kbd>ctrl</kbd>+<kbd>c</kbd>
 
@@ -70,7 +98,8 @@ Read the email locally using `mutt`. You should see it;
 
     mutt
 
-![emailblackhole-local-mutt](https://cloud.githubusercontent.com/assets/296940/7446280/54b6e112-f1a1-11e4-9cd7-eed758c8f301.png)
+![emailblackhole-local-mutt](https://cloud.githubusercontent.com/assets/296940/7446329/a11e6eac-f1a2-11e4-83b1-a6c01dd54b1a.png)
+
 
 #### Mutt in a nutshell
 
