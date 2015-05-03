@@ -2,8 +2,6 @@
 
 Don’t bug people with your web app workbench email notification, catch ’em and read ’em locally!
 
-**STATUS**: In progress
-
 Will eventually follow [Salt Formulas *conventions*](http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html).
 
 
