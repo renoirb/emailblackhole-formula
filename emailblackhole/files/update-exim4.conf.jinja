@@ -1,8 +1,8 @@
 # Managed by Salt Stack, for local delivery only w/ catchall.
 #
 # ANY email that match local machine address in `/etc/mailname` will
-# get forwarded to vagrant user in its Maildir folder (/home/vagrant/Maildir)
-# to read mail, as vagrant user, just do `mutt`.
+# get forwarded to {{ development_username }} user in its Maildir folder (/home/{{ development_username }}/Maildir)
+# to read mail, as {{ development_username }} user, just do `mutt`.
 #
 # This file should be in /etc/exim4/update-exim4.conf.conf
 #

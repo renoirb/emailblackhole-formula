@@ -4,10 +4,10 @@
 # Mutt is useful to read email from a terminal. If you are used to vim, you will
 # be able to grasp it quickly.
 #
-# To read mail, from the vagrant user, type mutt
+# To read mail, from the {{ development_username }} user, type mutt
 #
-set my_name='Vagrant'
-set from='vagrant@localhost'
+set my_name='DEVELOPMENT, {{ development_username }}'
+set from='{{ development_username }}@localhost'
 set use_from=yes
 set envelope_from="yes"
 

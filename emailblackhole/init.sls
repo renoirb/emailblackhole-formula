@@ -1,3 +1,5 @@
+{%- set development_username = salt['pillar.get']('emailblackhole:username', 'ubuntu') %}
+
 formula-shell-utils:
   pkg.installed:
     - pkgs:
@@ -28,12 +30,13 @@ Email catch_all blackhole:
     - source: salt://emailblackhole/files/update-exim4.conf.jinja
     - template: jinja
     - context:
+        development_username: {{ development_username }}
         dc_other_hostnames: {{ salt['pillar.get']('emailblackhole:dc_other_hostnames', []) }}
   cmd.run:
-    - name: maildirmake /home/vagrant/Maildir
-    - user: vagrant
-    - group: vagrant
-    - unless: test -d /home/vagrant/Maildir
+    - name: maildirmake /home/{{ development_username }}/Maildir
+    - user: {{ development_username }}
+    - group: {{ development_username }}
+    - unless: test -d /home/{{ development_username }}/Maildir
     - listen_in:
       - service: exim4
 
@@ -49,13 +52,16 @@ Email catch_all blackhole:
   file.managed:
     - source: salt://emailblackhole/files/alias.jinja
     - template: jinja
+    - context:
+        development_username: {{ development_username }}
     - listen_in:
       - service: exim4
 
-/home/vagrant/.muttrc:
+/home/{{ development_username }}/.muttrc:
   file.managed:
     - source: salt://emailblackhole/files/muttrc.jinja
     - template: jinja
+    - context:
+        development_username: {{ development_username }}
     - require:
       - pkg: formula-shell-utils
-

@@ -20,8 +20,7 @@ base:
 Be sure you require the state as an external GitFS and have similar `minion` config.
 
 ```yaml
-# /etc/salt/minion.d/vagrant.conf
-master: localhost
+# /etc/salt/minion.d/fileserver.conf
 file_client: local
 
 fileserver_backend:
@@ -32,8 +31,17 @@ gitfs_remotes:
   - https://github.com/renoirb/emailblackhole-formula.git
 ```
 
-Emails won’t go out, but to prevent bouncing you can adjust `emailblackhole:dc_other_hostnames` with the list of email providers you want to superseed locally.
+Emails won’t go out, but to prevent bouncing
+you can adjust `emailblackhole:dc_other_hostnames`
+with the list of email providers you want to catch.
 
+```yaml
+emailblackhole:
+  username: ubuntu
+  dc_other_hostnames:
+    - gmail.com
+    - example.org
+```
 
 
 ## Features
@@ -53,17 +61,17 @@ Then...
 
 Try sending yourself an email using `swaks`
 
-    vagrant@sweetiesweetie:~$ swaks -t bogus@gmail.com -s localhost --body 'Hey let me send this to gmail.com'
+    vagrant@example:~$ swaks -t bogus@gmail.com -s localhost --body 'Hey let me send this to gmail.com'
     === Trying localhost:25...
     === Connected to localhost.
-    <-  220 sweetiesweetie ESMTP Exim 4.82 Ubuntu Sun, 03 May 2015 18:38:41 +0000
-     -> EHLO sweetiesweetie.local
-    <-  250-sweetiesweetie Hello localhost [127.0.0.1]
+    <-  220 example ESMTP Exim 4.82 Ubuntu Sun, 03 May 2015 18:38:41 +0000
+     -> EHLO example.local
+    <-  250-example Hello localhost [127.0.0.1]
     <-  250-SIZE 52428800
     <-  250-8BITMIME
     <-  250-PIPELINING
     <-  250 HELP
-     -> MAIL FROM:<vagrant@sweetiesweetie.local>
+     -> MAIL FROM:<vagrant@example.local>
     <-  250 OK
      -> RCPT TO:<bogus@gmail.com>
     <-  250 Accepted
@@ -71,7 +79,7 @@ Try sending yourself an email using `swaks`
     <-  354 Enter message, ending with "." on a line by itself
      -> Date: Sun, 03 May 2015 18:38:41 +0000
      -> To: bogus@gmail.com
-     -> From: vagrant@sweetiesweetie.local
+     -> From: vagrant@example.local
      -> Subject: test Sun, 03 May 2015 18:38:41 +0000
      -> X-Mailer: swaks v20130209.0 jetmore.org/john/code/swaks/
      ->
@@ -80,13 +88,13 @@ Try sending yourself an email using `swaks`
      -> .
     <-  250 OK id=1Yoymn-0000iN-E1
      -> QUIT
-    <-  221 sweetiesweetie closing connection
+    <-  221 example closing connection
     === Connection closed with remote host.
 
 Look where the mail went:
 
     sudo tail /var/log/exim4/mainlog
-    2015-05-03 18:38:41 1Yoymn-0000iN-E1 <= vagrant@sweetiesweetie.local H=localhost (sweetiesweetie.local) [127.0.0.1] P=esmtp S=509
+    2015-05-03 18:38:41 1Yoymn-0000iN-E1 <= vagrant@example.local H=localhost (example.local) [127.0.0.1] P=esmtp S=509
     2015-05-03 18:38:41 1Yoymn-0000iN-E1 => vagrant <bogus@gmail.com> R=local_user T=maildir_home
     2015-05-03 18:38:41 1Yoymn-0000iN-E1 Completed
 
@@ -121,4 +129,3 @@ This work was based on notes gathered around, here are the most helpful pages I 
 * https://lists.debian.org/debian-user/2004/10/msg01701.html
 * https://www.rosehosting.com/blog/how-to-setup-a-mailserver-with-exim4-and-dbmail-on-a-debian-7-vps/
 * http://stackoverflow.com/questions/2417306/catchall-router-on-exim-does-not-work
-
